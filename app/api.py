@@ -8,10 +8,13 @@ import flask
 
 import util.util as UTIL
 
+from routes.fred_routes import fred_routes
+
 VERSION = "0.0.1"
 
 app = flask.Flask(__name__)
 app.config['DEBUG'] = UTIL.get_env_bool('FLASK_DEBUG', False)
+app.register_blueprint(fred_routes)
 
 
 @app.route('/', methods=['GET'])
