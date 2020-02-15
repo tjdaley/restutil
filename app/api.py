@@ -6,7 +6,7 @@ Copyright (c) 2020 by Thomas J. Daley, J.D. All Rights Reserved.
 import os
 import flask
 
-import lib.util as UTIL
+import util.util as UTIL
 
 VERSION = "0.0.1"
 
