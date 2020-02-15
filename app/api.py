@@ -17,6 +17,6 @@ def home():
     return {'success': True, 'message': "Hello, World.", 'version': VERSION}
 
 
-port = os.environ.get('LISTEN_PORT')
+port = os.environ['LISTEN_PORT']
 print(f"Listening on {port}.")
 app.run(port=port)
