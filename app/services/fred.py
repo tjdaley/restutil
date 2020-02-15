@@ -12,7 +12,7 @@ from decimal import Decimal
 import json
 import requests
 
-import app.util.util as UTIL
+import util.util as UTIL
 
 BASEURL = {}
 BASEURL["SERIES_SEARCH"] = "https://api.stlouisfed.org/fred/series/search?"
