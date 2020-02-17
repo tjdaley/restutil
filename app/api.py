@@ -33,6 +33,17 @@ def home():
     return {'success': True, 'message': "Hello, World.", 'version': VERSION}
 
 
+@app.route('/sitemap/<string:service>/<string:query>/', methods=['GET'])
+def sitemap_for_service(service, query):
+    search = f'/{service}/{query}/'
+    results = []
+    for rule in app.url_map.iter_rules():
+        rule_str = str(rule)
+        if rule_str.startswith(search):
+            results.append(rule_str)
+    return flask.jsonify(results)
+
+
 @app.route('/sitemap', methods=['GET'])
 def sitemap():
     return flask.jsonify(list_routes())
@@ -40,4 +51,4 @@ def sitemap():
 
 port = UTIL.get_env('LISTEN_PORT', 8081)
 UTIL.logmessage(f"Listening on {port}.")
-app.run(port=port)
+app.run(host='0.0.0.0', port=port)
