@@ -13,8 +13,7 @@ import util.util as UTIL
 
 from routes.fred_routes import fred_routes
 
-VERSION = "0.0.1"
-RATE_LIMIT = 2  # Can make this many calls per second
+RATE_LIMIT = 3  # Can make this many calls per second
 
 redis_service = redis.Redis(
     host=UTIL.get_env('REDIS_HOST', '192.168.1.81'),
@@ -56,12 +55,12 @@ def verify_access_token():
         if int(redis_service.get(key)) == 1:
             result = None
         else:
-            result = UTIL.failure_message('Access token not enabled', 'ERR_TOKEN_NOT_ENABLED', VERSION)
+            result = UTIL.failure_message('Access token not enabled', 'ERR_TOKEN_NOT_ENABLED')
     except TypeError:
-        result = UTIL.failure_message('Error in access token storage', 'ERR_TOKEN_DATA_TYPE', VERSION)
+        result = UTIL.failure_message('Error in access token storage', 'ERR_TOKEN_DATA_TYPE')
     except Exception as e:
         UTIL.logmessage(f"Error retrieving {key}: {str(e)}")
-        result = UTIL.failure_message(str(e), 'ERR_GENERAL', VERSION)
+        result = UTIL.failure_message(str(e), 'ERR_GENERAL')
     return result
 
 
@@ -86,7 +85,7 @@ def verify_rate_limit() -> bool:
     pipe.expire(key, 1)
     result = pipe.execute()
     if result[0] >= RATE_LIMIT:
-        return UTIL.failure_message("Rate Limited", "ERR_RATE_LIMIT", VERSION)
+        return UTIL.failure_message("Rate Limited", "ERR_RATE_LIMIT")
     return None
 
 
@@ -109,7 +108,7 @@ def list_routes():
 
 @app.route('/', methods=['GET'])
 def home():
-    message = UTIL.success_message(VERSION)
+    message = UTIL.success_message()
     message['message'] = "Hello, World!!"
     return message
 
@@ -118,7 +117,7 @@ def home():
 def sitemap_for_service(service, query):
     search = f'/{service}/{query}/'
     results = []
-    message = UTIL.success_message(VERSION)
+    message = UTIL.success_message()
     for rule in app.url_map.iter_rules():
         rule_str = str(rule)
         if rule_str.startswith(search):

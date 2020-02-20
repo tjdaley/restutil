@@ -5,15 +5,15 @@ Copyright (c) 2020 by Thomas J. Daley, J.D. All Rights Reserved.
 """
 import os
 
+VERSION = "0.0.1"
 
-def failure_message(code: str, message: str, version: str) -> dict:
+def failure_message(code: str, message: str) -> dict:
     """
     Return a dict that is a standard failure message.
 
     Args:
         code (str): Mnemonic that never changes for this message
         message (str): Human-readable message text explaining the failure
-        version (str): The API version
     Returns:
         (dict): A message template.
     """
@@ -21,7 +21,7 @@ def failure_message(code: str, message: str, version: str) -> dict:
         'success': False,
         'message': message,
         'code': code,
-        'version': version,
+        'version': VERSION,
     }
 
 
@@ -78,14 +78,13 @@ def logmessage(message: str):
     print(message)
 
 
-def success_message(version: str) -> dict:
+def success_message() -> dict:
     """
     Return a dict that is a standard failure message.
 
     Args:
         code (str): Mnemonic that never changes for this message
         message (str): Human-readable message text explaining the failure
-        version (str): The API version
     Returns:
         (dict): A message template.
     """
@@ -93,5 +92,5 @@ def success_message(version: str) -> dict:
         'success': True,
         'message': "OK",
         'code': "OK",
-        'version': version,
+        'version': VERSION,
     }

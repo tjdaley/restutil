@@ -16,5 +16,7 @@ def get_historical_rate(year, month, term):
     rate = fred_service.average_fixed_mortgage(year, month, term)
     params = {'year': year, 'month': month, 'term': term}
     data = {'query': 'historical_rate', 'params': params, 'response': rate}
-    result = {'success': True, 'message': "OK", 'dataset': "FRED", 'data': data}
-    return jsonify(result)
+    message = UTIL.success_message()
+    message['dataset'] = 'FRED'
+    message['data'] = data
+    return jsonify(message)
