@@ -10,8 +10,6 @@ from flask import Blueprint, request, jsonify
 fred_routes = Blueprint('fred_routes', __name__, template_folder='templates')
 
 
-@fred_routes.route('/fred/historical_rate/<int:year>/', defaults={'month': 6, 'term': 30})
-@fred_routes.route('/fred/historical_rate/<int:year>/<int:month>/', defaults={'term': 30})
 @fred_routes.route('/fred/historical_rate/<int:year>/<int:month>/<int:term>/', methods=['GET'])
 def get_historical_rate(year, month, term):
     fred_service = FRED.FredUtil()
