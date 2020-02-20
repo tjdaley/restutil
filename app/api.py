@@ -5,16 +5,95 @@ Copyright (c) 2020 by Thomas J. Daley, J.D. All Rights Reserved.
 """
 import os
 import flask
+from functools import wraps
+import redis
+import time
 
 import util.util as UTIL
 
 from routes.fred_routes import fred_routes
 
 VERSION = "0.0.1"
+RATE_LIMIT = 2  # Can make this many calls per second
+
+redis_service = redis.Redis(
+    host=UTIL.get_env('REDIS_HOST', '192.168.1.81'),
+    port=int(UTIL.get_env('REDIS_PORT', 6379)),
+    db=0
+)
 
 app = flask.Flask(__name__)
-app.config['DEBUG'] = UTIL.get_env_bool('FLASK_DEBUG', False)
+app.config['DEBUG'] = UTIL.get_env_bool('FLASK_DEBUG', True)
 app.register_blueprint(fred_routes)
+
+
+def authentication_failed():
+    """
+    Constructs a standard failure return.
+    """
+    return flask.make_response(
+        "Could not verify your access key.",
+        401,
+        {'WWW-Authenticate': 'Basic realm="Access Key Required"'}
+    )
+
+
+def verify_access_token():
+    """
+    Verify that an access token is valid and enabled.
+
+    Args:
+      None.
+    Returns:
+      None if OK otherwise dict to return as error message
+    """
+    if not flask.request.authorization:
+        return authentication_failed()
+
+    key = f'access_{flask.request.authorization.username}'
+
+    try:
+        if int(redis_service.get(key)) == 1:
+            result = None
+        else:
+            result = UTIL.failure_message('Access token not enabled', 'ERR_TOKEN_NOT_ENABLED', VERSION)
+    except TypeError:
+        result = UTIL.failure_message('Error in access token storage', 'ERR_TOKEN_DATA_TYPE', VERSION)
+    except Exception as e:
+        UTIL.logmessage(f"Error retrieving {key}: {str(e)}")
+        result = UTIL.failure_message(str(e), 'ERR_GENERAL', VERSION)
+    return result
+
+
+def verify_rate_limit() -> bool:
+    """
+    See if a request should be rejected because the account associated
+    with *token* has used up all its requests for this timeperiod.
+
+    Args:
+      None.
+    Returns:
+      None if OK otherwise dict to return as error message
+    """
+    if not flask.request.authorization:
+        return authentication_failed()
+
+    token = flask.request.authorization.username
+    timestamp = int(time.time())
+    key = f'rate_{token}_{timestamp}'
+    pipe = redis_service.pipeline()
+    pipe.incr(key)
+    pipe.expire(key, 1)
+    result = pipe.execute()
+    if result[0] >= RATE_LIMIT:
+        return UTIL.failure_message("Rate Limited", "ERR_RATE_LIMIT", VERSION)
+    return None
+
+
+# List of functions that will be called before every request.
+app.before_request_funcs = {
+    None: [verify_access_token, verify_rate_limit]
+}
 
 
 def list_routes():
@@ -30,18 +109,22 @@ def list_routes():
 
 @app.route('/', methods=['GET'])
 def home():
-    return {'success': True, 'message': "Hello, World.", 'version': VERSION}
+    message = UTIL.success_message(VERSION)
+    message['message'] = "Hello, World!!"
+    return message
 
 
 @app.route('/sitemap/<string:service>/<string:query>/', methods=['GET'])
 def sitemap_for_service(service, query):
     search = f'/{service}/{query}/'
     results = []
+    message = UTIL.success_message(VERSION)
     for rule in app.url_map.iter_rules():
         rule_str = str(rule)
         if rule_str.startswith(search):
             results.append(rule_str)
-    return flask.jsonify(results)
+    message['data'] = results
+    return flask.jsonify(message)
 
 
 @app.route('/sitemap', methods=['GET'])
