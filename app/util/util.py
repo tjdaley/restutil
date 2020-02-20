@@ -6,6 +6,25 @@ Copyright (c) 2020 by Thomas J. Daley, J.D. All Rights Reserved.
 import os
 
 
+def failure_message(code: str, message: str, version: str) -> dict:
+    """
+    Return a dict that is a standard failure message.
+
+    Args:
+        code (str): Mnemonic that never changes for this message
+        message (str): Human-readable message text explaining the failure
+        version (str): The API version
+    Returns:
+        (dict): A message template.
+    """
+    return {
+        'success': False,
+        'message': message,
+        'code': code,
+        'version': version,
+    }
+
+
 def get_env(key: str, default=None) -> str:
     """
     Get a configuration variable. For now, we use environment
@@ -57,3 +76,22 @@ def logmessage(message: str):
         None
     """
     print(message)
+
+
+def success_message(version: str) -> dict:
+    """
+    Return a dict that is a standard failure message.
+
+    Args:
+        code (str): Mnemonic that never changes for this message
+        message (str): Human-readable message text explaining the failure
+        version (str): The API version
+    Returns:
+        (dict): A message template.
+    """
+    return {
+        'success': True,
+        'message': "OK",
+        'code': "OK",
+        'version': version,
+    }
