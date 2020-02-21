@@ -190,10 +190,6 @@ class FredUtil(object):
 
 if __name__ == "__main__":
     futil = FredUtil()
-    print("Average 30 year mortgage rate in 2018:",
-          futil.average_fixed_mortgage(2018))
-    print("-" * 40)
-    print("Average 30 year mortgage rate in Nov 2017:", futil.average_fixed_mortgage(2017, 11))
     print("-" * 40)
     print("Average 5 year mortgage rate in Feb 2018:", futil.average_fixed_mortgage(2018, 2, 5))
     print("-" * 40)

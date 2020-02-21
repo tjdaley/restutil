@@ -7,6 +7,7 @@ import os
 
 VERSION = "0.0.1"
 
+
 def failure_message(message: str, code: str) -> dict:
     """
     Return a dict that is a standard failure message.

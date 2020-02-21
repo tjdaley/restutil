@@ -16,7 +16,7 @@ from routes.fred_routes import fred_routes
 RATE_LIMIT = 3  # Can make this many calls per second
 
 redis_service = redis.Redis(
-    host=UTIL.get_env('REDIS_HOST', '192.168.1.81'),
+    host=UTIL.get_env('REDIS_HOST', 'localhost'),
     port=int(UTIL.get_env('REDIS_PORT', 6379)),
     db=0
 )
