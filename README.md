@@ -43,7 +43,24 @@ http://br549:br549@localhost:8081/fred/historical_rate/2020/01/30/
 ```
 
 **Result**
-
+```json
+{
+  "code": "OK", 
+  "data": {
+    "params": {
+      "month": 1, 
+      "term": 30, 
+      "year": 2020
+    }, 
+    "query": "historical_rate", 
+    "response": 0.0362
+  }, 
+  "dataset": "FRED", 
+  "message": "OK", 
+  "success": true, 
+  "version": "0.0.1"
+}
+```
 ## Zillow Home Value
 *This service provides the Z-Estimate and branding links for a parcel of property given a street address and city+state+zip. The
 source of data is Zillow.*
@@ -59,7 +76,35 @@ http://username:username@host:port/zillow/value/<string:street>/<string:city_sta
 The following URL will retrieve information about the White House
 
 ```
-http://br549:br549@localhost:8081/zillow/value/2100+pennsylvania+avenue/washington+dc
+http://br549:br549@localhost:8081/zillow/value/123+main+st/dallas+tx
 ```
 
 **Result**
+```json
+
+  "code": "OK", 
+  "data": {
+    "params": {
+      "city_state_zip": "dallas+tx", 
+      "street": "123+main+st"
+    }, 
+    "query": "zillow/value", 
+    "response": {
+      "city": "Dallas", 
+      "comps_link": "http://www.zillow.com/homes/comps/26662117_zpid/", 
+      "details_link": "https://www.zillow.com/homedetails/123-Main-St-Dallas-TX-75000/26662117_zpid/", 
+      "latitude": "34.172576", 
+      "longitude": "-95.66564", 
+      "state": "TX", 
+      "street": "123 Main St", 
+      "value": 302820.0, 
+      "zbranding": "<a href=\"https://www.zillow.com/homedetails/123-Main-St-Dallas-TX-75000/26662117_zpid/\">See more details for 123 Main St on Zillow.</a>", 
+      "zip": "75000"
+    }
+  }, 
+  "dataset": "ZILLOW", 
+  "message": "OK", 
+  "success": true, 
+  "version": "0.0.1"
+}
+```
