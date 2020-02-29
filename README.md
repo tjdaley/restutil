@@ -109,3 +109,8 @@ http://br549:br549@localhost:8081/zillow/value/123+main+st/dallas+tx
   "version": "0.0.1"
 }
 ```
+
+<a href="#author"></a>
+# Author
+
+Thomas J. Daley, J.D. is a practicing family law litigation attorney, occassional mediator, and software developer.
