@@ -5,7 +5,7 @@ Rest server that provides utilities to my other projects
     <a href="https://github.com/tjdaley/restutil/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/tjdaley/restutil"></a>
     <a href="https://github.com/tjdaley/restutil/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/tjdaley/restutil"><a>
     <a href="https://github.com/tjdaley/restutil/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/tjdaley/restutil"></a>
-    <a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Ftjdaley%2Frestutil"><img alt="Twitter" src="https://img.shields.io/twitter/url?style=social"></a>
+    <img alt="Stage: Development" src="https://img.shields.io/badge/stage-Development-orange">
 </p>
 <p align="center">
     <a href="#installation">Installation</a> &bull;
@@ -13,13 +13,12 @@ Rest server that provides utilities to my other projects
     <a href="#author">Author</a>
 </p>
 
-<a href="#installation></a>
+<a href="#installation"></a>
 # Installation
 
 ```
 pip install https://github.com/tjdaley/restutil
 ```
-<small>, default='X1-ZWz1h8ok2gzpqj_3qukz'</small>
 
 <a href="#services"></a>
 # Services
@@ -36,6 +35,7 @@ http://username:username@host:port/fred/historical_rate/<int:year>/<int:month>/<
 ```
 
 **Example**
+
 The following URL will retrieve the average interest rate for a 30 year loan in January of 2020.
 
 ```
@@ -73,6 +73,7 @@ http://username:username@host:port/zillow/value/<string:street>/<string:city_sta
 ```
 
 **Example**
+
 The following URL will retrieve information about the White House
 
 ```
