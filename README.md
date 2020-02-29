@@ -17,7 +17,7 @@ Rest server that provides utilities to my other projects
 # Installation
 
 ```
-pip install https://github.com/tjdaley/restutil
+git clone https://github.com/tjdaley/restutil.git
 ```
 
 <a href="#services"></a>
