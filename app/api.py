@@ -12,6 +12,7 @@ import time
 import util.util as UTIL
 
 from routes.fred_routes import fred_routes
+from routes.zillow_routes import zillow_routes
 
 RATE_LIMIT = 3  # Can make this many calls per second
 
@@ -24,6 +25,7 @@ redis_service = redis.Redis(
 app = flask.Flask(__name__)
 app.config['DEBUG'] = UTIL.get_env_bool('FLASK_DEBUG', True)
 app.register_blueprint(fred_routes)
+app.register_blueprint(zillow_routes)
 
 
 def authentication_failed():
