@@ -107,7 +107,10 @@ class Zillow(object):
         zip_code = address.find("zipcode").text
         latitide = address.find("latitude").text
         longitude = address.find("longitude").text
-        zestimate = float(root.find("./response/results/result/zestimate/amount").text)
+        try:
+            zestimate = float(root.find("./response/results/result/zestimate/amount").text)
+        except Exception:
+            zestimate = float(0.0)
         details_link = root.find("./response/results/result/links/homedetails").text
         comps_link = root.find("./response/results/result/links/comparables").text
         zbranding = '<a href="{}">See more details for {} on Zillow.</a>'.format(details_link, street)
@@ -144,12 +147,12 @@ class Zillow(object):
         except Exception as e:
             message = str(e)
             UTIL.logmessage(f"Error retrieving from {url}: {message}")
-            return (False, message, None)
+            return None
 
         try:
             zinfo = self.parse(xml_tree)
-            return (True, 'OK', zinfo)
+            return zinfo
         except Exception as e:
             message = str(e)
             UTIL.logmessage(f"Error parsing XML: {message}")
-        return (False, message, None)
+        return None
