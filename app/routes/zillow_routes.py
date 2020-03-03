@@ -10,7 +10,7 @@ from flask import Blueprint, request, jsonify
 zillow_routes = Blueprint('zillow_routes', __name__, template_folder='templates')
 
 
-@zillow_routes.route('/zillow/value/<string:street>/<string:city_state_zip>', methods=['GET'])
+@zillow_routes.route('/zillow/value/<string:street>/<string:city_state_zip>/', methods=['GET'])
 def get_value(street, city_state_zip):
     zillow_service = ZILLOW.Zillow()
     parcel_info = zillow_service.search(street, city_state_zip)
