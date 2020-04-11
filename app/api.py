@@ -135,6 +135,6 @@ def sitemap():
     return flask.jsonify(list_routes())
 
 
-port = UTIL.get_env('LISTEN_PORT', 8081)
+port = UTIL.get_env('LISTEN_PORT', 8005)
 UTIL.logmessage(f"Listening on {port}.")
 app.run(host='0.0.0.0', port=port)
