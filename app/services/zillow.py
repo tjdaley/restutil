@@ -19,7 +19,7 @@ SOURCE = "ZILLOW"
 
 class Zillow(object):
     """
-    Encapsulates an interface into PublicData's web site via Python.
+    Encapsulates an interface into Zillows's property value API.
     """
 
     def __init__(self):

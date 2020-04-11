@@ -61,6 +61,32 @@ http://br549:br549@localhost:8081/fred/historical_rate/2020/01/30/
   "version": "0.0.1"
 }
 ```
+
+## Code Search
+*This service searches codified laws in the State of Texas.*
+
+### URL
+
+**Pattern**
+```
+http://username:username@host:port/codesearch/<str:query>/<str:codelist>/
+```
+
+**Example**
+
+The following example will retrieve a reference to all codified laws referencing 'protective order'. The
+'*' at the end of the query tells the search agent to search **ALL** codified laws in Texas (that have been indexed).
+
+```
+http://br549:br549@localhost:8081/codesearch/protective+order/*/
+```
+
+If you only wanted to search for the words 'protective' and 'order' in the Family Code and Penal code, the query would be:
+
+```
+http://br549:br549@localhost:8081/codesearch/protective+order/fa+pe/
+```
+
 ## Zillow Home Value
 *This service provides the Z-Estimate and branding links for a parcel of property given a street address and city+state+zip. The
 source of data is Zillow.*
@@ -114,3 +140,4 @@ http://br549:br549@localhost:8081/zillow/value/123+main+st/dallas+tx
 # Author
 
 Thomas J. Daley, J.D. is a practicing family law litigation attorney, occassional mediator, and software developer.
+Thomas J. Daley practices family law in north Texas, particularly in Collin County, Dallas County, and Denton County.
