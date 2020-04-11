@@ -20,14 +20,22 @@ Rest server that provides utilities to my other projects
 git clone https://github.com/tjdaley/restutil.git
 ```
 
+This service requires the following packages:
+
+1. flask
+  a.  ```pip install -U Flask```
+2. redis  ```
+  a.  ```sudo apt update && apt get install redis-server```
+  b.  ```pip install -U redis```
+3. whoosh
+  a. ```pip install Whoosh``
+
 <a href="#services"></a>
 # Services
 
 ## Average Mortgage Interest Rate
 *This service provides the average mortgage interest rate for residential property from a given year, month, and loan term (in years). The
 source of data is the Federal Reserve Bank of St. Louis's FRED service.*
-
-### URL
 
 **Pattern**
 ```
@@ -65,11 +73,49 @@ http://br549:br549@localhost:8081/fred/historical_rate/2020/01/30/
 ## Code Search
 *This service searches codified laws in the State of Texas.*
 
-### URL
+### Retrieve List of Searchable Codes
 
 **Pattern**
 ```
-http://username:username@host:port/codesearch/<string:query>/<string:codelist>/
+https://username:username@host:port//codesearch/list/
+```
+
+**Example**
+```
+https://br549:br549@localhost:8005//codesearch/list/
+```
+
+**Result**
+```
+[
+  {
+    "code": "cp", 
+    "code_name": "Civil Practice & Remedy"
+  }, 
+  {
+    "code": "es", 
+    "code_name": "Estates"
+  }, 
+  {
+    "code": "fa", 
+    "code_name": "Family"
+  }, 
+  {
+    "code": "hs", 
+    "code_name": "Health & Safety"
+  }, 
+  {
+    "code": "pe", 
+    "code_name": "Penal"
+  }
+]
+```
+
+### Search Codified Laws
+
+**Pattern**
+```
+http://username:username@host:port/codesearch/search/<string:query>/<string:codelist>/
 ```
 
 **Example**
@@ -81,10 +127,30 @@ The following example will retrieve a reference to all codified laws referencing
 http://br549:br549@localhost:8081/codesearch/protective+order/*/
 ```
 
-If you only wanted to search for the words 'protective' and 'order' in the Family Code and Penal code, the query would be:
+If you only wanted to search for the words 'interview', 'child', 'in', 'chambers' in the Family Code and Penal code, the query would be:
 
 ```
-http://br549:br549@localhost:8081/codesearch/protective+order/fa+pe/
+http://br549:br549@localhost:8081/codesearch/interview+child+in+chambers/fa+pe/
+```
+
+**Result**
+
+```
+[
+  {
+    "code": "FA", 
+    "code_name": "FAMILY", 
+    "chapter": "153. CONSERVATORSHIP", 
+    "subchapter": "A. GENERAL PROVISIONS", 
+    "title": "5. THE PARENT-CHILD RELATIONSHIP",
+    "subtitle": "B. SUITS AFFECTING THE PARENT-CHILD RELATIONSHIP", 
+    "section_number": "153.009", 
+    "section_name": "INTERVIEW OF CHILD IN CHAMBERS", 
+    "text": "(a)  In a nonjury trial or at a hearing, on the application of a party, the  amicus attorney, or the attorney ad litem for the child, the court shall interview in chambers a child 12 years of age or older and may interview in chambers a child under 12 years of age to determine the child's wishes as to conservatorship or as to the person who shall have the exclusive right to determine the child's primary residence.  The court may also interview a child in chambers on the court's own motion for a purpose specified by this subsection. (b)  In a nonjury trial or at a hearing, on the application of a party, the amicus attorney, or the attorney ad litem for the child or on the court's own motion, the court may interview the child in chambers to determine the child's wishes as to possession,  access, or any other issue in the suit affecting the parent-child relationship. (c)  Interviewing a child does not diminish the discretion of the court in determining the best interests of the child. (d)  In a jury trial, the court may not interview the child in chambers regarding an issue on which a party is entitled to a jury verdict. (e)  In any trial or hearing, the court may permit the attorney for a party, the amicus attorney, the guardian ad litem for the child, or the attorney ad litem for the child to be present at the interview. (f)  On the motion of a party, the amicus attorney, or the attorney ad litem for the child, or on the court's own motion, the court shall cause a record of the interview to be made when the child is 12 years of age or older.  A record of the interview shall be part of the record in the case.",
+    "highlights": "attorney ad litem for the child, the court shall <b class=\"match term0\">interview</b> in <b class=\"match term1\">chambers</b> a child 12 years of age or older and may <b class=\"match term0\">interview</b> in <b class=\"match term1\">chambers</b> a child under 12 years of age to determine the child...the child's primary residence.  The court may also <b class=\"match term0\">interview</b> a child in <b class=\"match term1\">chambers</b> on the court's own motion for a purpose specified by...child or on the court's own motion, the court may <b class=\"match term0\">interview</b> the child in <b class=\"match term1\">chambers</b> to determine the child's wishes as to possession,  access", 
+    "future_effective_date": "N/A"
+  }
+]
 ```
 
 ## Zillow Home Value
