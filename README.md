@@ -69,7 +69,7 @@ http://br549:br549@localhost:8081/fred/historical_rate/2020/01/30/
 
 **Pattern**
 ```
-http://username:username@host:port/codesearch/<str:query>/<str:codelist>/
+http://username:username@host:port/codesearch/<string:query>/<string:codelist>/
 ```
 
 **Example**
