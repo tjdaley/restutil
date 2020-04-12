@@ -14,6 +14,7 @@ import util.util as UTIL
 
 
 INDEX_PATH = UTIL.get_env('INDEX_PATH', 'index')
+CODE_PATH = UTIL.get_env('CODE_PATH', 'index')
 
 
 def schema():
