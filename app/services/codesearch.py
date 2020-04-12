@@ -12,6 +12,8 @@ from collections import namedtuple
 import json
 import util.util as UTIL
 
+VERSION = '0.0.1'
+
 
 def list_codes():
     """
@@ -32,7 +34,7 @@ def list_codes():
             {
                 'code': code_name,
                 'code_name': config['code_full_name'],
-                'version': '1.0.0',
+                'version': VERSION,
                 'searchable': searchable
             }
         )
@@ -104,6 +106,7 @@ def search(query_text, code_list):
                 'text': doc.get('text', "NO TEXT"),
                 'source_text': doc.get('source_text', "SOURCE TEXT NOT AVAILABLE"),
                 'future_effective_date': doc.get('future_effective_date', "N/A"),
-                'highlights': doc.highlights('text')
+                'highlights': doc.highlights('text'),
+                'version': VERSION
             })
         return documents
