@@ -14,6 +14,7 @@ import util.util as UTIL
 from routes.fred_routes import fred_routes
 from routes.zillow_routes import zillow_routes
 from routes.code_search_routes import code_routes
+from services.codesearch import download_index
 
 RATE_LIMIT = 3  # Can make this many calls per second
 
@@ -23,6 +24,11 @@ redis_service = redis.Redis(
     port=int(UTIL.get_env('REDIS_PORT', 6379)),
     db=0
 )
+
+if UTIL.get_env('DOWNLOAD_INDEX_ON_START') == 'Y':
+    UTIL.logmessage('Downloading search index')
+    download_index()
+    UTIL.logmessage('Search index downloaded')
 
 app = flask.Flask(__name__)
 app.config['DEBUG'] = UTIL.get_env_bool('FLASK_DEBUG', True)
