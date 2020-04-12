@@ -6,11 +6,14 @@ Copyright (c) by Thomas J. Daley, J.D.
 import glob
 import os
 import util.functions as FN
+import shutil
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser, FuzzyTermPlugin, QueryParser
 from collections import namedtuple
 import json
 import util.util as UTIL
+import boto3
+from botocore.exceptions import ClientError, NoCredentialsError
 
 VERSION = '0.0.1'
 
@@ -110,3 +113,40 @@ def search(query_text, code_list):
                 'version': VERSION
             })
         return documents
+
+
+def download_index() -> bool:
+    s3_client = boto3.client(
+        's3',
+        aws_access_key_id=os.environ.get('aws_access_key_id'),
+        aws_secret_access_key=os.environ.get('aws_secret_access_key')
+    )
+    try:
+        object_name = 'index.zip'
+        file_name = f'{FN.INDEX_PATH}/{object_name}'
+        with open(file_name, 'wb') as fp:
+            s3_client.download_fileobj('codesearch.attorney.bot', object_name, fp)
+    except NoCredentialsError as e:
+        print(str(e))
+        return False
+    except ClientError as e:
+        print(str(e))
+        return False
+
+    shutil.unpack_archive(file_name, FN.INDEX_PATH, 'zip')
+
+    try:
+        object_name = 'code_configs.zip'
+        file_name = f'{FN.CODE_PATH}/{object_name}'
+        with open(file_name, 'wb') as fp:
+            s3_client.download_fileobj('codesearch.attorney.bot', object_name, fp)
+    except NoCredentialsError as e:
+        print(str(e))
+        return False
+    except ClientError as e:
+        print(str(e))
+        return False
+
+    shutil.unpack_archive(file_name, FN.CODE_PATH, 'zip')
+
+    return True
