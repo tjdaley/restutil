@@ -4,6 +4,11 @@ util.py - Utility functions
 Copyright (c) 2020 by Thomas J. Daley, J.D. All Rights Reserved.
 """
 import os
+import dotenv
+
+# Load environment variables
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+dotenv.load_dotenv(dotenv_path)
 
 VERSION = "0.0.1"
 

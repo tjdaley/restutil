@@ -9,12 +9,8 @@ import util.functions as FN
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser, FuzzyTermPlugin, QueryParser
 from collections import namedtuple
-import dotenv
 import json
-
-# Load environment variables
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-dotenv.load_dotenv(dotenv_path)
+import util.util as UTIL
 
 
 class CodeSearch(object):
@@ -23,7 +19,7 @@ class CodeSearch(object):
         """
         Retrieve a list of searchable codes.
         """
-        code_path = os.environ.get('CODE_PATH')
+        code_path = UTIL.get_env('CODE_PATH')
         files = glob.glob(f'{code_path}/??.json')
         codes = []
         for code_file in files:

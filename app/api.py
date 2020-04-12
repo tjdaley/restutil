@@ -8,7 +8,6 @@ import flask
 from functools import wraps
 import redis
 import time
-import dotenv
 
 import util.util as UTIL
 
@@ -17,10 +16,6 @@ from routes.zillow_routes import zillow_routes
 from routes.code_search_routes import code_routes
 
 RATE_LIMIT = 3  # Can make this many calls per second
-
-# Load environment variables
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-dotenv.load_dotenv(dotenv_path)
 
 
 redis_service = redis.Redis(

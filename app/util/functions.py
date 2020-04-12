@@ -10,8 +10,10 @@ import os
 from whoosh.index import exists_in, open_dir
 from whoosh.fields import DATETIME, Schema, TEXT
 
+import util.util as UTIL
 
-INDEX_PATH = os.environ.get('INDEX_PATH', 'index')
+
+INDEX_PATH = UTIL.get_env('INDEX_PATH', 'index')
 
 
 def schema():
