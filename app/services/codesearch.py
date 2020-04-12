@@ -116,37 +116,42 @@ def search(query_text, code_list):
 
 
 def download_index() -> bool:
+    # Instantiate AWS client to access S3 resources
     s3_client = boto3.client(
         's3',
         aws_access_key_id=os.environ.get('aws_access_key_id'),
         aws_secret_access_key=os.environ.get('aws_secret_access_key')
     )
-    try:
-        object_name = 'index.zip'
-        file_name = f'{FN.INDEX_PATH}/{object_name}'
-        with open(file_name, 'wb') as fp:
-            s3_client.download_fileobj('codesearch.attorney.bot', object_name, fp)
-    except NoCredentialsError as e:
-        print(str(e))
-        return False
-    except ClientError as e:
-        print(str(e))
-        return False
+    s3_bucket_name = UTIL.get_env('S3_BUCKET_NAME', 'codesearch.attorney.bot')
 
-    shutil.unpack_archive(file_name, FN.INDEX_PATH, 'zip')
+    # List of archives we will download from S3
+    archives = [
+        {'object_name': 'index.zip', 'destination': FN.INDEX_PATH},
+        {'object_name': 'code_configs.zip', 'destination': FN.CODE_PATH}
+    ]
 
-    try:
-        object_name = 'code_configs.zip'
-        file_name = f'{FN.CODE_PATH}/{object_name}'
-        with open(file_name, 'wb') as fp:
-            s3_client.download_fileobj('codesearch.attorney.bot', object_name, fp)
-    except NoCredentialsError as e:
-        print(str(e))
-        return False
-    except ClientError as e:
-        print(str(e))
-        return False
+    # Here to download and open the archives
+    for archive in archives:
+        destination = archive['destination']
+        object_name = archive['object_name']
 
-    shutil.unpack_archive(file_name, FN.CODE_PATH, 'zip')
+        # Create destination path, if it does not exist
+        if not os.path.exists(destination):
+            os.mkdir(destination)
+
+        # Connect to S3 and download the archive to a binary file
+        try:
+            file_name = f'{destination}/{object_name}'
+            with open(file_name, 'wb') as fp:
+                s3_client.download_fileobj(s3_bucket_name, object_name, fp)
+        except NoCredentialsError as e:
+            print(str(e))
+            return False
+        except ClientError as e:
+            print(str(e))
+            return False
+
+        # Unpack the archive to its destination folder
+        shutil.unpack_archive(file_name, destination, 'zip')
 
     return True
