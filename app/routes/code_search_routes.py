@@ -15,12 +15,10 @@ code_routes = Blueprint('code_routes', __name__, template_folder='templates')
 def search_codified_laws(query, codelist):
     u_query = urllib.parse.unquote_plus(query)
     u_codelist = urllib.parse.unquote_plus(codelist)
-    code_searcher = CODE.CodeSearch()
-    matches = code_searcher.search(u_query, u_codelist)
+    matches = CODE.search(u_query, u_codelist)
     return jsonify(matches)
 
 
 @code_routes.route('/codesearch/list/', methods=['GET'])
 def get_code_list():
-    code_searcher = CODE.CodeSearch()
-    return jsonify(code_searcher.list_codes())
+    return jsonify(CODE.list_codes())
