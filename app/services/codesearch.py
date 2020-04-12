@@ -62,7 +62,6 @@ class CodeSearch(object):
             result = searcher.search(query, limit=1)
         return result.scored_length() > 0
 
-
     @staticmethod
     def search(query_text, code_list):
         """
