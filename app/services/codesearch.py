@@ -15,7 +15,7 @@ import util.util as UTIL
 import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
 
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 DEBUG = UTIL.get_env_bool('FLASK_DEBUG', False)
 
 
@@ -109,12 +109,15 @@ def search(query_text, code_list):
                 'subtitle': doc.get('subtitle', "NO SUBTITLE"),
                 'chapter': doc.get('chapter', "NO CHAPTER"),
                 'subchapter': doc.get('subchapter', "NO SUBCHAPTER"),
+                'section_prefix': doc.get('section_prefix', 'Sec.'),
                 'section_number': doc.get('section_number', "NO SECTION NUMBER"),
                 'section_name': doc.get('section_name', "NO SECTION NAME"),
                 'text': doc.get('text', "NO TEXT"),
+                'source_text': doc.get('source_text', "NO SOURCE TEXT"),
                 'source_text': doc.get('source_text', "SOURCE TEXT NOT AVAILABLE"),
                 'future_effective_date': doc.get('future_effective_date', "N/A"),
                 'highlights': doc.highlights('text'),
+                'filename': doc.get('filename'),
                 'version': VERSION
             })
         return documents
