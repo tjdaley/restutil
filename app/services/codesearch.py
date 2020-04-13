@@ -16,6 +16,7 @@ import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
 
 VERSION = '0.0.1'
+DEBUG = UTIL.get_env_bool('FLASK_DEBUG', False)
 
 
 def list_codes():
@@ -83,11 +84,15 @@ def search(query_text, code_list):
         code_clauses = [f'code:{c} ' for c in codes]
         code_clause = ' OR '.join(code_clauses)
         query_text = query_text + ' ' + code_clause
-    print(code_clause)
-    print(query_text)
+        if DEBUG:
+            UTIL.logmessage(f"Code Clause: {code_clause}")
+    if DEBUG:
+        UTIL.logmessage(f"Query Text: {query_text}")
+
     # Convert query string to query-language query
     query = parser.parse(query_text)
-    print(query)
+    if DEBUG:
+        UTIL.logmessage(f"Query: {str(query)}")
 
     # Search for results
     documents = []
