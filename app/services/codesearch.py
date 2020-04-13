@@ -160,6 +160,10 @@ def download_index() -> bool:
             return False
 
         # Unpack the archive to its destination folder
-        shutil.unpack_archive(file_name, destination, 'zip')
+        try:
+            shutil.unpack_archive(file_name, destination, 'zip')
+        except Exception as e:
+            UTIL.logmessage(f"Error unzipping {file_name} to {destination}: {str(e)}")
+            return False
 
     return True
