@@ -31,7 +31,6 @@ if UTIL.get_env('DOWNLOAD_INDEX_ON_START') == 'Y':
     UTIL.logmessage('Search index downloaded')
 
 app = flask.Flask(__name__)
-app.config['DEBUG'] = UTIL.get_env_bool('FLASK_DEBUG', True)
 app.register_blueprint(fred_routes)
 app.register_blueprint(zillow_routes)
 app.register_blueprint(code_routes)
@@ -142,6 +141,7 @@ def sitemap():
     return flask.jsonify(list_routes())
 
 
-port = UTIL.get_env('LISTEN_PORT', 8004)
-UTIL.logmessage(f"Listening on {port}.")
-app.run(host='0.0.0.0', port=port)
+PORT = UTIL.get_env('LISTEN_PORT', 8005)
+DEBUG = UTIL.get_env_bool('FLASK_DEBUG', False)
+UTIL.logmessage(f"Listening on {PORT}.")
+app.run(host='0.0.0.0', port=PORT, debug=DEBUG)
