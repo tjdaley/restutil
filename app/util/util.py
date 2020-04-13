@@ -67,9 +67,10 @@ def get_env_bool(key: str, default: bool) -> bool:
         return value
 
     if isinstance(value, str):
-        return value.upper() in true_values
+        result = value.upper() in true_values
+        return result
 
-    return value is True
+    return False
 
 
 def logmessage(message: str):
