@@ -120,7 +120,14 @@ def search(query_text, code_list):
                 'filename': doc.get('filename'),
                 'version': VERSION
             })
-        return documents
+    result = {
+        'query_text': query_text,
+        'query': str(query),
+        'count': len(documents),
+        'documents': documents,
+        'version': VERSION
+    }
+    return result
 
 
 def download_index() -> bool:
