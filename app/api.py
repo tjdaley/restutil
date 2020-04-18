@@ -36,7 +36,7 @@ app.register_blueprint(fred_routes)
 app.register_blueprint(zillow_routes)
 app.register_blueprint(code_routes)
 
-cors = CORS(app, resources={r"/*": {"origins": "attorney.bot"}})
+cors = CORS(app, resources={r"/*": {"origins": "https://www.attorney.bot"}})
 
 
 def authentication_failed():
