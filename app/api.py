@@ -121,9 +121,9 @@ def verify_rate_limit() -> bool:
 
 
 # List of functions that will be called before every request.
-app.before_request_funcs = {
-    None: [verify_access_token, verify_rate_limit]
-}
+#app.before_request_funcs = {
+#    None: [verify_access_token, verify_rate_limit]
+#}
 
 
 def list_routes():
