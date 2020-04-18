@@ -74,7 +74,7 @@ def verify_access_token():
       None if OK otherwise dict to return as error message
     """
     if not flask.request.authorization:
-        print("*"*80)
+        print("|"*80)
         print(flask.request)
         return authentication_failed()
 
@@ -104,6 +104,8 @@ def verify_rate_limit() -> bool:
       None if OK otherwise dict to return as error message
     """
     if not flask.request.authorization:
+        print("*"*80)
+        print(flask.request)
         return authentication_failed()
 
     token = flask.request.authorization.username
