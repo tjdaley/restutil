@@ -5,6 +5,7 @@ Copyright (c) 2020 by Thomas J. Daley, J.D. All Rights Reserved.
 """
 import os
 import flask
+from flask_cors import CORS
 from functools import wraps
 import redis
 import time
@@ -34,6 +35,8 @@ app = flask.Flask(__name__)
 app.register_blueprint(fred_routes)
 app.register_blueprint(zillow_routes)
 app.register_blueprint(code_routes)
+
+cors = CORS(app, resources={r"/*": {"origins": "attorney.bot"}})
 
 
 def authentication_failed():
@@ -103,7 +106,6 @@ def verify_rate_limit() -> bool:
 app.before_request_funcs = {
     None: [verify_access_token, verify_rate_limit]
 }
-
 
 def list_routes():
     from urllib.parse import unquote
