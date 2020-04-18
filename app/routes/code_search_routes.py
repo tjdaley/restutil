@@ -22,8 +22,3 @@ def search_codified_laws(query, codelist):
 @code_routes.route('/codesearch/list/', methods=['GET'])
 def get_code_list():
     return jsonify(CODE.list_codes())
-
-
-@code_routes.route('/codesearch/list/', methods=['OPTIONS'])
-def opt_code_list():
-    return jsonify(CODE.list_codes())
