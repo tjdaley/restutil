@@ -59,7 +59,7 @@ def authentication_failed():
     """
     return flask.make_response(
         "Could not verify your access key.",
-        402,
+        401,
         {'WWW-Authenticate': 'Basic realm="Access Key Required"'}
     )
 
@@ -74,6 +74,7 @@ def verify_access_token():
       None if OK otherwise dict to return as error message
     """
     if not flask.request.authorization:
+        print(flask.request)
         return authentication_failed()
 
     key = f'access_{flask.request.authorization.username}'
