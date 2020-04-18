@@ -73,9 +73,10 @@ def verify_access_token():
     Returns:
       None if OK otherwise dict to return as error message
     """
+    if flask.request.method == 'OPTIONS':
+        return None
+
     if not flask.request.authorization:
-        print("|"*80)
-        print(flask.request)
         return authentication_failed()
 
     key = f'access_{flask.request.authorization.username}'
@@ -103,9 +104,10 @@ def verify_rate_limit() -> bool:
     Returns:
       None if OK otherwise dict to return as error message
     """
+    if flask.request.method == 'OPTIONS':
+        return None
+
     if not flask.request.authorization:
-        print("*"*80)
-        print(flask.request)
         return authentication_failed()
 
     token = flask.request.authorization.username
@@ -121,9 +123,9 @@ def verify_rate_limit() -> bool:
 
 
 # List of functions that will be called before every request.
-#app.before_request_funcs = {
-#    None: [verify_access_token, verify_rate_limit]
-#}
+app.before_request_funcs = {
+    None: [verify_access_token, verify_rate_limit]
+}
 
 
 def list_routes():
