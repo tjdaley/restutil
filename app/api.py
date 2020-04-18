@@ -31,12 +31,21 @@ if UTIL.get_env('DOWNLOAD_INDEX_ON_START') == 'Y':
     download_index()
     UTIL.logmessage('Search index downloaded')
 
+# Set up the app
 app = flask.Flask(__name__)
 app.register_blueprint(fred_routes)
 app.register_blueprint(zillow_routes)
 app.register_blueprint(code_routes)
 
-cors = CORS(app, resources={r"/*": {"origins": "https://www.attorney.bot"}})
+# Set up Cross-Origin Requests
+config = {
+    'ORIGINS': [
+        'https://www.attorney.bot',
+        'https://discovery.jdbot.us',
+    ],
+}
+
+cors = CORS(app, resources={r"/*": {"origins": config['ORIGINS']}}, supports_credentials=True)
 
 
 def authentication_failed():
@@ -106,6 +115,7 @@ def verify_rate_limit() -> bool:
 app.before_request_funcs = {
     None: [verify_access_token, verify_rate_limit]
 }
+
 
 def list_routes():
     from urllib.parse import unquote
