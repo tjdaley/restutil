@@ -47,6 +47,11 @@ config = {
 
 cors = CORS(app, resources={r"/*": {"origins": config['ORIGINS']}}, supports_credentials=True)
 
+# Enable CORS on the blueprints
+CORS(fred_routes)
+CORS(zillow_routes)
+CORS(code_routes)
+
 
 def authentication_failed():
     """
