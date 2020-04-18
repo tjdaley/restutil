@@ -25,5 +25,5 @@ def get_code_list():
 
 
 @code_routes.route('/codesearch/list/', methods=['OPTIONS'])
-def get_code_list():
+def opt_code_list():
     return jsonify(CODE.list_codes())
