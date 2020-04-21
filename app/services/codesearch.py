@@ -15,7 +15,7 @@ import util.util as UTIL
 import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
 
-VERSION = '0.0.2'
+VERSION = '0.0.3'
 DEBUG = UTIL.get_env_bool('FLASK_DEBUG', False)
 
 
@@ -34,12 +34,16 @@ def list_codes():
             searchable = 'Y'
         else:
             searchable = 'N'
+        shortname = config.get('code_short_name')
+        if not shortname:
+            shortname = config['code_full_name'].replace('Texas', '').replace('Code Of', '').replace('Code', '')
         codes.append(
             {
                 'code': code_name,
                 'code_name': config['code_full_name'],
                 'version': VERSION,
-                'searchable': searchable
+                'searchable': searchable,
+                'code_short_name': shortname
             }
         )
     return codes
