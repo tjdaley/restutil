@@ -36,7 +36,7 @@ def list_codes():
             searchable = 'N'
         shortname = config.get('code_short_name')
         if not shortname:
-            shortname = config['code_full_name'].replace('Texas', '').replace('Code Of', '').replace('Code', '')
+            shortname = config['code_full_name'].replace('Texas', '').replace('Code of', '').replace('Code', '').strip()
         codes.append(
             {
                 'code': code_name,
