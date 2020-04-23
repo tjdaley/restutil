@@ -205,5 +205,5 @@ http://br549:br549@localhost:8081/zillow/value/123+main+st/dallas+tx
 <a href="#author"></a>
 # Author
 
-Thomas J. Daley, J.D. is a practicing family law litigation attorney, occassional mediator, and software developer.
-Thomas J. Daley practices family law in north Texas, particularly in Collin County, Dallas County, and Denton County.
+
+Thomas J. Daley, J.D. is an active family law litigation attorney practicing primarily in Collin County, Texas, a family law mediator, and software developer. My family law practice is limited to divorce, child custody, child support, enforcment, and modification suits. [Web Site](https://koonsfuller.com/attorneys/tom-daley/)
