@@ -118,7 +118,6 @@ def search(query_text, code_list):
                 'section_name': doc.get('section_name', "NO SECTION NAME"),
                 'text': doc.get('text', "NO TEXT"),
                 'source_text': doc.get('source_text', "NO SOURCE TEXT"),
-                'source_text': doc.get('source_text', "SOURCE TEXT NOT AVAILABLE"),
                 'future_effective_date': doc.get('future_effective_date', "N/A"),
                 'highlights': doc.highlights('text'),
                 'filename': doc.get('filename'),
