@@ -44,7 +44,8 @@ config = {
     'ORIGINS': [
         'https://www.attorney.bot',
         'https://discovery.jdbot.us',
-        'https://koonsfullerlawfirm-my.sharepoint.com'
+        'https://koonsfullerlawfirm-my.sharepoint.com',
+        'https://localhost:3000'
     ],
 }
 
