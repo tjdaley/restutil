@@ -15,6 +15,7 @@ import util.util as UTIL
 from routes.fred_routes import fred_routes
 from routes.zillow_routes import zillow_routes
 from routes.code_search_routes import code_routes
+from routes.ms_addin_routes import ms_routes
 from services.codesearch import download_index
 
 RATE_LIMIT = 3  # Can make this many calls per second
@@ -36,12 +37,14 @@ app = flask.Flask(__name__)
 app.register_blueprint(fred_routes)
 app.register_blueprint(zillow_routes)
 app.register_blueprint(code_routes)
+app.register_blueprint(ms_routes)
 
 # Set up Cross-Origin Requests
 config = {
     'ORIGINS': [
         'https://www.attorney.bot',
         'https://discovery.jdbot.us',
+        'https://koonsfullerlawfirm-my.sharepoint.com'
     ],
 }
 
@@ -51,6 +54,7 @@ cors = CORS(app, resources={r"/*": {"origins": config['ORIGINS']}}, supports_cre
 CORS(fred_routes)
 CORS(zillow_routes)
 CORS(code_routes)
+CORS(ms_routes)
 
 
 def authentication_failed():
