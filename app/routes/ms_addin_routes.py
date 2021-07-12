@@ -17,6 +17,6 @@ def get_get_objection_responses():
         {'key': 'obj_overbroad', 'content': "Is it really over broad?", 'label': "Over Broad"},
     ]
 
-    responses = {key: value for key, value in doc.items}
+    responses = {i['key']: i for i in doc}
 
     return jsonify(responses)
