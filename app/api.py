@@ -92,7 +92,7 @@ def verify_access_token():
         else:
             result = UTIL.failure_message('Access token not enabled', 'ERR_TOKEN_NOT_ENABLED')
     except TypeError as e:
-        result = UTIL.failure_message(f'Error in access token storage: {str(e)}', 'ERR_TOKEN_DATA_TYPE')
+        result = UTIL.failure_message(f'Error in access token storage for "{key}": {str(e)}', 'ERR_TOKEN_DATA_TYPE')
     except Exception as e:
         UTIL.logmessage(f"Error retrieving {key}: {str(e)}")
         result = UTIL.failure_message(str(e), 'ERR_GENERAL')
